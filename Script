@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Define the threshold for disk space (80% in this case)
+threshold=80
+
+# Get the current disk usage percentage
+disk_usage=$(df -H / | tail -n 1 | awk '{print $5}' | cut -d'%' -f1)
+
+# Check if disk usage exceeds the threshold
+if [ "$disk_usage" -ge "$threshold" ]; then
+  # Send a notification using Kandji's built-in notification system
+  /usr/local/bin/kandji-alert "Disk Space Alert" "Disk space usage on this device is $disk_usage%. Please free up space."
+
+  # You can also take additional actions, like sending an email or running a remediation script.
+  # For example, you might want to run a script that cleans up unnecessary files or logs.
+  # /path/to/your-remediation-script.sh
+fi
